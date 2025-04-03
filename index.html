@@ -4,96 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Stylish Clock</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      margin: 0;
-      color: #fff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    /* Digital clock styling */
-    .digital-clock {
-      font-size: 3rem;
-      margin-bottom: 50px;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 10px 20px;
-      border-radius: 10px;
-    }
-
-    /* Analog clock container */
-    .analog-clock {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border: 8px solid #fff;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Center dot */
-    .analog-clock::after {
-      content: '';
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: #fff;
-      border-radius: 50%;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10;
-    }
-
-    /* Clock hands common styling */
-    .hand {
-      position: absolute;
-      width: 50%;
-      background: #fff;
-      top: 50%;
-      transform-origin: 100%;
-      transform: rotate(90deg);
-      border-radius: 2px;
-    }
-    
-    /* Hour hand */
-    .hand.hour {
-      height: 6px;
-      background: #fff;
-      z-index: 3;
-    }
-    
-    /* Minute hand */
-    .hand.minute {
-      height: 4px;
-      background: #ddd;
-      z-index: 2;
-    }
-    
-    /* Second hand */
-    .hand.second {
-      height: 2px;
-      background: #ff6b6b;
-      z-index: 1;
-    }
-
-    /* Tick marks for clock face */
-    .tick {
-      position: absolute;
-      width: 4px;
-      height: 15px;
-      background: #fff;
-      top: 5px;
-      left: 50%;
-      transform-origin: center bottom;
-    }
-  </style>
+  <link rel="icon" href="assets/fevicon.png">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Digital Clock -->
@@ -101,59 +13,13 @@
 
   <!-- Analog Clock -->
   <div class="analog-clock" id="analogClock">
+    <!-- Numbers and tick marks are added dynamically -->
     <!-- Clock hands -->
     <div class="hand hour" id="hourHand"></div>
     <div class="hand minute" id="minuteHand"></div>
     <div class="hand second" id="secondHand"></div>
-    <!-- Tick marks (12 ticks) -->
-    <script>
-      // Create tick marks dynamically
-      const clockFace = document.getElementById('analogClock');
-      for (let i = 0; i < 12; i++) {
-        const tick = document.createElement('div');
-        tick.classList.add('tick');
-        tick.style.transform = `rotate(${i * 30}deg) translateX(-50%)`;
-        clockFace.appendChild(tick);
-      }
-    </script>
   </div>
-
-  <script>
-    // Select elements
-    const digitalClock = document.getElementById('digitalClock');
-    const hourHand = document.getElementById('hourHand');
-    const minuteHand = document.getElementById('minuteHand');
-    const secondHand = document.getElementById('secondHand');
-
-    // Function to update clocks
-    function updateClocks() {
-      const now = new Date();
-      const seconds = now.getSeconds();
-      const minutes = now.getMinutes();
-      const hours = now.getHours();
-
-      // Digital clock update (zero padded)
-      const formattedTime = 
-        String(hours).padStart(2, '0') + ':' +
-        String(minutes).padStart(2, '0') + ':' +
-        String(seconds).padStart(2, '0');
-      digitalClock.textContent = formattedTime;
-
-      // Calculate rotation angles for analog clock
-      const secondsDeg = ((seconds / 60) * 360) + 90; // offset by 90deg for initial position
-      const minutesDeg = ((minutes / 60) * 360) + ((seconds/60)*6) + 90;
-      const hoursDeg = ((hours % 12) / 12 * 360) + ((minutes/60)*30) + 90;
-
-      // Apply rotations
-      secondHand.style.transform = `rotate(${secondsDeg}deg)`;
-      minuteHand.style.transform = `rotate(${minutesDeg}deg)`;
-      hourHand.style.transform = `rotate(${hoursDeg}deg)`;
-    }
-
-    // Initial call
-    updateClocks();
-    // Update every second
-    setInterval(updateClocks, 1000);
-  </script>
+  
+  <script src="index.js"></script>
 </body>
 </html>
